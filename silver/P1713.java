@@ -7,11 +7,11 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class P1713 {
-	static int photo[];
-	static int number[];
-	static int recommend[];
-	static int updated[];
-	static int updateNum=1;
+	static int photo[]; //사진 틀
+	static int number[]; //추천 학생 번호를 저장하는 배열 
+	static int recommend[]; //추천 받은 횟수를 저장하는 배열
+	static int updated[]; //가장 오래 게시되어있던 사진을 찾기 위한 배열 (숫자가 작을수록 오래됐다는 뜻)
+	static int updateNum=1; //업데이트 번호 
 	
 	static void post(int num) {
 		boolean isPosted=false;
@@ -43,15 +43,17 @@ public class P1713 {
 			updateNum++;
 		}
 	}
-	static int counting(int arr[]) {
+	static int counting(int arr[]) { //추천 횟수를 확인하는 함수 
 		int min=Integer.MAX_VALUE;
 		int oldest=Integer.MAX_VALUE;
 		int count=0;
 		int index=0;
 		
+		//추천횟수가 가장 작은 값을 찾음
 		for(int i=0;i<arr.length;i++) {
 			min=Math.min(min, recommend[arr[i]]); //min => 추천 횟수가 가장 작은 값
 		}
+		//추천 받은 횟수가 적은 사람의 수를 셈
 		for(int i=0;i<arr.length;i++) {
 			if(recommend[arr[i]]==min)
 				count++;
@@ -66,7 +68,7 @@ public class P1713 {
 			for(int i=0;i<arr.length;i++) {
 				if(updated[arr[i]]==oldest) { // 가장 오래 게시되어있던 사람을 
 					recommend[arr[i]]=0; //추천 받은 횟수 0으로 변경 => 삭제 
-					index=i;
+					index=i; //해당 인덱스 저장
 				}
 			}
 		}
@@ -74,7 +76,7 @@ public class P1713 {
 			for(int i=0;i<arr.length;i++) {
 				if(recommend[arr[i]]==min) {
 					recommend[arr[i]]=0; //추천 받은 횟수 0으로 변경 => 삭제 
-					index=i;
+					index=i; //해당 인덱스 저장 
 				}
 			}
 		}
@@ -89,9 +91,9 @@ public class P1713 {
 		int count=Integer.parseInt(br.readLine()); //전체 학생의 총 추천 횟수 
 		
 		photo=new int[n];
-		number=new int[count]; //추천 학생 번호를 저장하는 배열 
-		recommend=new int[101]; //추천 받은 횟수를 저장하는 배열
-		updated=new int[101]; //업데이트된 걸 저장하는 함수 (숫자가 작을수록 오래됐다는 뜻)
+		number=new int[count];
+		recommend=new int[101]; 
+		updated=new int[101];
 		
 		StringTokenizer st=new StringTokenizer(br.readLine());
 		for(int i=0;i<count;i++) {
@@ -102,7 +104,8 @@ public class P1713 {
 		}
 		Arrays.sort(photo);
 		for(int i=0;i<photo.length;i++) {
-			System.out.print(photo[i]+" ");
+			if(photo[i]!=0) //사진 틀의 개수가 후보자 수보다 많으면 0이 나올 수 있으므로 고려해줘야함
+				System.out.print(photo[i]+" ");
 		}
 	
 	}
