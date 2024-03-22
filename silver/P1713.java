@@ -20,8 +20,6 @@ public class P1713 {
 		for(int i=0;i<photo.length;i++) {
 			if(photo[i]==num) { //이미 사진이 게시되어 있음
 				recommend[num]++; //해당 번호를 가진 학생의 추천횟수 증가 
-				updated[num]=updateNum; //업데이트 번호 넣기 
-				updateNum++;
 				isPosted=true; // 사진 게시됨
 			}
 		}
@@ -33,7 +31,6 @@ public class P1713 {
 					break;
 				}
 			}
-			
 			if(index==-1) { //사진 칸이 꽉 차 있는 경우 
 				int deletedIndex=counting(photo); //추천 횟수를 확인하는 함수 실행 
 				photo[deletedIndex]=num;
@@ -47,15 +44,14 @@ public class P1713 {
 		}
 	}
 	static int counting(int arr[]) {
-		int min=recommend[arr[0]];
-		int oldest=updated[arr[0]];
+		int min=Integer.MAX_VALUE;
+		int oldest=Integer.MAX_VALUE;
 		int count=0;
 		int index=0;
 		
 		for(int i=0;i<arr.length;i++) {
 			min=Math.min(min, recommend[arr[i]]); //min => 추천 횟수가 가장 작은 값
 		}
-		
 		for(int i=0;i<arr.length;i++) {
 			if(recommend[arr[i]]==min)
 				count++;
@@ -63,12 +59,12 @@ public class P1713 {
 		
 		if(count>=2) { //추천 받은 횟수가 적은 사람이 2명 이상
 			for(int i=0;i<arr.length;i++) {
-				oldest=Math.min(oldest,updated[arr[i]]); //제일 값이 작은 값을 찾음 => 가장 오래 게시되어있던
+				if(recommend[arr[i]]==min)//추천횟수가 min값과 같은 사람 중에, 가장 오래된 사람을 찾아야함 !!
+					oldest=Math.min(oldest,updated[arr[i]]); //제일 값이 작은 값을 찾음 => 가장 오래 게시되어있던
 			}
 			
 			for(int i=0;i<arr.length;i++) {
-				if(updated[arr[i]]==oldest) {
-					System.out.println(arr[i]);
+				if(updated[arr[i]]==oldest) { // 가장 오래 게시되어있던 사람을 
 					recommend[arr[i]]=0; //추천 받은 횟수 0으로 변경 => 삭제 
 					index=i;
 				}
@@ -104,9 +100,6 @@ public class P1713 {
 		for(int i=0;i<number.length;i++) {
 			post(number[i]);
 		}
-//		for(int i=1;i<=6;i++) {
-//			System.out.print("recommend"+i+":"+recommend[i]);
-//		}
 		Arrays.sort(photo);
 		for(int i=0;i<photo.length;i++) {
 			System.out.print(photo[i]+" ");
