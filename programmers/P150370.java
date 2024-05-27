@@ -43,15 +43,15 @@ class Solution {
             
             month+=expiration;
 			
-			      if (month > 12) {
-				      year += (month/12);
-				      month%=12;
+	    if (month > 12) {
+		 year += (month/12);
+		 month%=12;
                 
                 if(month==0){ 
                     year--;
                     month=12;
                 }
-			      } 
+	    } 
             
             if(day==1){
               day=28;
